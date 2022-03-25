@@ -38,7 +38,7 @@ router.post('/login', async function (req, res) {
 })
 
 router.get('/bookings', async function (req, res) {
-    if(req.params['hid']==undefined){
+    if(req.query['hid']==undefined){
         res.status(400).send("hid not found")
         return ;
     }
