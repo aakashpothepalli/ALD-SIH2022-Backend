@@ -7,7 +7,16 @@ const patientDB = deta.Base("patient")
 
 router.get('/get', async function (req, res) {
     const patients = await patientDB.fetch()
-    res.send(patients.items)
+    res.status(200).send(patients.items)
+})
+
+router.get('/getPatient', async function (req, res) {
+  if(req.query['pid']==undefined){
+      res.status(400).send('pid not found')
+      return;
+  }
+  const patients = await patientDB.fetch({pid:req.query['pid']})
+  res.status(200).send(patients.items)
 })
 
 router.post('/register', async function (req, res) {

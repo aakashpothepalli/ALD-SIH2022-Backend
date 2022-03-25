@@ -24,7 +24,7 @@ router.get('/getCultureActivities',async function (req,res){
 })
 
 router.post("/registerActivity",async function (req,res){
-    const reqParams = ['name','category','type','cost','description','act_agency_name','img_urls','ratings'];
+    const reqParams = ['name','category','type','cost','description','act_agency_name','img_urls','ratings','location'];
     for(let par of reqParams){
         if(req.body[par]==undefined){
             res.status(400).send(par+" not found");
@@ -38,4 +38,5 @@ router.post("/registerActivity",async function (req,res){
     await activitiesDB.put(data)
     res.status(200).send("Registered activity");
 })
+
 module.exports = router;
