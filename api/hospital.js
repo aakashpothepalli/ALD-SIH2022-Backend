@@ -6,8 +6,8 @@ const deta = Deta("c0zjinx1_bmnWXrhDYAmgwJf2vHzuDE8CvRjYyhAB")
 const patientDB = deta.Base("patient")
 
 router.get('/get', async function (req, res) {
-    const patients = await patientDB.fetch()
-    res.status(200).send(patients.items)
+    const hospitals = await deta.Base('hospital').fetch()
+    res.status(200).send(hospitals.items)
 })
 
 router.post('/register', async function (req, res) {

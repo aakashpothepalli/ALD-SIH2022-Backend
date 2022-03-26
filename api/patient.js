@@ -78,5 +78,26 @@ router.post("/loginbypid",async function (req,res){
   }
   res.status(200).send(patient.items[0]);
 })
+router.post('/bookactivity', async function (req, res) {
+  const reqParams = ['aid','pid'];
+  for(let par of reqParams){
+    if(req.body[par]==undefined){
+      res.status(400).send(par+" not found");
+      return ;
+    }
+  }
+  let booking = await deta.Base('travel_bookibn').fetch({aid:req.body['aid'],pid:req.body['pid']})
+  if(booking.count!=0){
+    res.status(401).send("Already booked")
+    return;
+  }
+  let data = {}
+  for(let par of reqParams){
+    data[par] = req.body[par]
+  }
+  await deta.Base('treatment_bookings').put(data)
+  res.status(200).send("Booked");
+
+})
 
 module.exports = router;
