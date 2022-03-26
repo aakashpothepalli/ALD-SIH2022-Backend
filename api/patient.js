@@ -28,7 +28,7 @@ router.post('/register', async function (req, res) {
       return ;
     }
   }
-  let patient = await patientDB.fetch({pid:req.body['email']})
+  let patient = await patientDB.fetch({email:req.body['email']})
   if(patient.count!=0){
     res.status(401).send("User already exists")
     return;
@@ -55,7 +55,7 @@ router.post('/loginbyemail', async function (req, res) {
     }
   }
 
-  let patient = await patientDB.fetch({pid:req.body['email']})
+  let patient = await patientDB.fetch({email:req.body['email']})
   if(patient.count==0){
     res.status(401).send("User not found")
     return;
