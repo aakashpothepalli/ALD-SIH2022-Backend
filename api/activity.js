@@ -11,7 +11,7 @@ router.get('/getTourismActivities', async function (req, res) {
         return;
     }
     const activities = await activitiesDB.fetch({type:'activity',category:req.query['category']})
-    res.status(200).send(activities.items)
+    res.status(200).send({list:activities.items})
 })
 
 router.get('/getCultureActivities',async function (req,res){
@@ -20,7 +20,7 @@ router.get('/getCultureActivities',async function (req,res){
         return;
     }
     const cultures = await activitiesDB.fetch({type:'culture',category:req.query['category']})
-    res.status(200).send(cultures.items)
+    res.status(200).send({list:cultures.items})
 })
 
 router.post("/registerActivity",async function (req,res){
