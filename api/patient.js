@@ -21,7 +21,7 @@ router.get('/getPatient', async function (req, res) {
 
 router.post('/register', async function (req, res) {
   // pid , name, age, country, gender
-  const reqParams = ['email','password','name','age','country','gender'];
+  const reqParams = ['pid','email','password','name','age','country','gender'];
   for(let par of reqParams){
     if(req.body[par]==undefined){
       res.status(400).send(par+" not found");
@@ -35,12 +35,10 @@ router.post('/register', async function (req, res) {
   }
   const { v4: uuidv4 } = require('uuid');
 
-  let pid = uuidv4();
   let data = {}
   for(let par of reqParams){
     data[par] = req.body[par]
   }
-  data['pid'] = pid
   await patientDB.put(data)
   res.status(200).send("Registered user");
 })
