@@ -86,7 +86,7 @@ router.post('/bookactivity', async function (req, res) {
       return ;
     }
   }
-  let booking = await deta.Base('travel_bookibn').fetch({aid:req.body['aid'],pid:req.body['pid']})
+  let booking = await deta.Base('travel_bookings').fetch({aid:req.body['aid'],pid:req.body['pid']})
   if(booking.count!=0){
     res.status(401).send("Already booked")
     return;
