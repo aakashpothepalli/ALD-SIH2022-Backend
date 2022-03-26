@@ -21,30 +21,62 @@ router.get('/getPatient', async function (req, res) {
 
 router.post('/register', async function (req, res) {
   // pid , name, age, country, gender
-  const reqParams = ['pid','name','age','country','gender'];
+  const reqParams = ['email','password','name','age','country','gender'];
   for(let par of reqParams){
     if(req.body[par]==undefined){
       res.status(400).send(par+" not found");
       return ;
     }
   }
+  let patient = await patientDB.fetch({pid:req.body['email']})
+  if(patient.count!=0){
+    res.status(401).send("User already exists")
+    return;
+  }
+  const { v4: uuidv4 } = require('uuid');
+
+  let pid = uuidv4();
   let data = {}
   for(let par of reqParams){
     data[par] = req.body[par]
   }
+  data['pid'] = pid
   await patientDB.put(data)
   res.status(200).send("Registered user");
 })
 
-router.post('/login', async function (req, res) {
-  if(req.body['pid']==undefined){
-    res.status(400).send("PID not found")
-    return ;
+router.post('/loginbyemail', async function (req, res) {
+
+  const reqParams = ['email','password'];
+  for(let par of reqParams){
+    if(req.body[par]==undefined){
+      res.status(400).send(par+" not found");
+      return ;
+    }
   }
 
-  let patient = await patientDB.fetch({pid:req.body['pid']})
-  res.status(200).send(patient.items);
+  let patient = await patientDB.fetch({pid:req.body['email']})
+  if(patient.count==0){
+    res.status(401).send("User not found")
+    return;
+  }
+  res.status(200).send(patient.items[0]);
 })
 
+router.post("/loginbypid",async function (req,res){
+  const reqParams = ['pid'];
+  for(let par of reqParams){
+    if(req.body[par]==undefined){
+      res.status(400).send(par+" not found");
+      return ;
+    }
+  }
+  let patient = await patientDB.fetch({pid:req.body['pid']})
+  if(patient.count==0){
+    res.status(401).send("User not found")
+    return;
+  }
+  res.status(200).send(patient.items[0]);
+})
 
 module.exports = router;

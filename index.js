@@ -7,6 +7,7 @@ app.use(express.json())
 app.use('/patient', require('./api/patient'))
 app.use('/hospital', require('./api/hospital'))
 app.use('/activity', require('./api/activity'))
+app.use('/hotel', require('./api/hotel'))
 
 app.listen(process.env.PORT || 8000,()=>{
     console.log("listening on ",process.env.PORT || 8000);
