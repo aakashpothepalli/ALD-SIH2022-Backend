@@ -95,7 +95,7 @@ router.post('/bookactivity', async function (req, res) {
   for(let par of reqParams){
     data[par] = req.body[par]
   }
-  await deta.Base('treatment_bookings').put(data)
+  await deta.Base('travel_bookings').put(data)
   res.status(200).send("Booked");
 
 })
