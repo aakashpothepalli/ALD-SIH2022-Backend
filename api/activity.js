@@ -10,7 +10,7 @@ router.get('/getTourismActivities', async function (req, res) {
         res.status(400).send('category not found')
         return;
     }
-    if(category=='green')category = undefined
+    if(req.query['category']=='green')req.query['category'] = undefined
 
     const activities = await activitiesDB.fetch({type:'activity',category:req.query['category']})
     res.status(200).send({list:activities.items})
@@ -21,7 +21,7 @@ router.get('/getCultureActivities',async function (req,res){
         res.status(400).send('category not found')
         return;
     }
-    if(category=='green')category = undefined
+    if(req.query['category']=='green')req.query['category'] = undefined
     const cultures = await activitiesDB.fetch({type:'culture',category:req.query['category']})
     res.status(200).send({list:cultures.items})
 })
