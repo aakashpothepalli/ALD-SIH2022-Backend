@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 const { Deta } = require("deta")
 const deta = Deta("c0zjinx1_bmnWXrhDYAmgwJf2vHzuDE8CvRjYyhAB")
-const patientDB = deta.Base("patient")
+const hospitalDB = deta.Base("hospital")
 
 router.get('/get', async function (req, res) {
     const hospitals = await deta.Base('hospital').fetch()
@@ -23,8 +23,8 @@ router.post('/register', async function (req, res) {
   for(let par of reqParams){
     data[par] = req.body[par]
   }
-  await patientDB.put(data)
-  res.status(200).send("Registered user");
+  await hospitalDB.put(data)
+  res.status(200).send("Registered hospital");
 })
 
 router.post('/login', async function (req, res) {
